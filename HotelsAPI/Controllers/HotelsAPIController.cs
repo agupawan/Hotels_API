@@ -1,4 +1,5 @@
 ﻿using HotelsAPI.Data;
+using HotelsAPI.Loggers;
 using HotelsAPI.Models;
 using HotelsAPI.Models.dto;
 using Microsoft.AspNetCore.Http;
@@ -13,8 +14,9 @@ namespace HotelsAPI.Controllers
     [ApiController]
     public class HotelsAPIController : ControllerBase
     {
-        private readonly ILogger<HotelsAPIController> _logger;
-        public HotelsAPIController(ILogger<HotelsAPIController> logger) {
+        //private readonly ILogger<HotelsAPIController> _logger;
+        private readonly ILogging _logger;
+        public HotelsAPIController(ILogging logger) {
             _logger = logger;   
         }
 
@@ -23,7 +25,7 @@ namespace HotelsAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<HotelDTO>> GetHotels()
         {
-            _logger.LogInformation("Getting info");
+            _logger.Log("Getting info","");
             return Ok(HotelStore.hotelList);
         }
 
@@ -36,7 +38,7 @@ namespace HotelsAPI.Controllers
         {
             if (id == 0)
             {
-                _logger.LogError("Get Hotel error with id " + id);
+                _logger.Log("Get Hotel error with id " + id,"error");
                 return BadRequest();
             }
             var hotel = HotelStore.hotelList.FirstOrDefault(u => u.Id == id);
