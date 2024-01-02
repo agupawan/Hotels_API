@@ -58,6 +58,8 @@ namespace HotelsAPI.Controllers
         {
             return "working";
         }
+          
+
 
         [HttpPost]
         public ActionResult<HotelDTO> CreateHotel([FromBody]HotelDTO hotel)
